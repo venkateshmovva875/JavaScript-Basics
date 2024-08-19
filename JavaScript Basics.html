@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Tasks</title>
+</head>
+<body>
+
+    <h2>Task 1: Simple Calculator</h2>
+    <form id="calculator-form">
+        <label for="num1">Number 1:</label>
+        <input type="number" id="num1" required>
+        <br></br>
+        <label for="num2">Number 2:</label>
+        <input type="number" id="num2" required>
+        <br></br>
+        <label for="operator">Operator:</label>
+        <input type="text" id="operator" required>
+        <br></br>
+        <button type="submit">Calculate</button>
+    </form>
+    <p id="calculator-result"></p>
+
+    <h2>Task 2: Array Operations (Sum of Even Numbers)</h2>
+    <form id="array-form">
+        <label for="array-input">Enter numbers separated by commas:</label>
+        <input type="text" id="array-input" required>
+        <br></br>
+        <button type="submit">Calculate Sum</button>
+    </form>
+    <p id="array-result"></p>
+
+    <h2>Task 3: Object Manipulation (Person Object)</h2>
+    <form id="object-form">
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" required>
+        <br></br>
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" required>
+        <br></br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" required>
+        <br></br>
+        <button type="submit">Update Person</button>
+    </form>
+    <p id="object-result"></p>
+
+    <script>
+        document.getElementById('calculator-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operator = document.getElementById('operator').value;
+            const result = simpleCalculator(num1, num2, operator);
+            document.getElementById('calculator-result').textContent = `Calculator Result: ${result}`;
+        });
+
+        function simpleCalculator(num1, num2, operator) {
+            if (!['+', '-', '*', '/'].includes(operator)) {
+                return "Invalid operator. Please use one of '+', '-', '*', '/'.";
+            }
+
+            switch (operator) {
+                case '+':
+                    return num1 + num2;
+                case '-':
+                    return num1 - num2;
+                case '*':
+                    return num1 * num2;
+                case '/':
+                    if (num2 === 0) return "Error: Division by zero is not allowed.";
+                    return num1 / num2;
+                default:
+                    return "Invalid operation.";
+            }
+        }
+
+        document.getElementById('array-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const arrayInput = document.getElementById('array-input').value;
+            const array = arrayInput.split(',').map(Number);
+            const result = sumOfEvenNumbers(array);
+            document.getElementById('array-result').textContent = `Sum of Even Numbers: ${result}`;
+        });
+
+        function sumOfEvenNumbers(arr) {
+            let sum = 0;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] % 2 === 0) {
+                    sum += arr[i];
+                }
+            }
+            return sum;
+        }
+
+        document.getElementById('object-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            const age = parseInt(document.getElementById('age').value);
+            
+            const Person = {
+                firstName: firstName,
+                lastName: lastName,
+                age: age,
+                getFullName: function() {
+                    return `${this.firstName} ${this.lastName}`;
+                },
+                incrementAge: function() {
+                    this.age++;
+                }
+            };
+
+            const fullName = Person.getFullName();
+            Person.incrementAge();
+            const newAge = Person.age;
+            document.getElementById('object-result').textContent = `Person: ${fullName}, Age: ${newAge}`;
+        });
+    </script>
+
+</body>
+</html>
